@@ -44,9 +44,9 @@ class TestProductionSetup:
         assert isinstance(CACHE_SIZE, int)
         assert CACHE_SIZE > 0
         
-        print(f"✅ Environment: {ENVIRONMENT}")
-        print(f"✅ Debug mode: {DEBUG}")
-        print(f"✅ Cache size: {CACHE_SIZE}")
+        print(f"Environment: {ENVIRONMENT}")
+        print(f"Debug mode: {DEBUG}")
+        print(f"Cache size: {CACHE_SIZE}")
     
     def test_database_initialization(self):
         """Test database is properly initialized"""
@@ -72,7 +72,7 @@ class TestProductionSetup:
         assert any("idx_grades" in idx for idx in indexes)
         
         conn.close()
-        print("✅ Database tables and indexes properly initialized")
+        print("Database tables and indexes properly initialized")
     
     def test_sample_data_loaded(self):
         """Test that sample data is loaded"""
@@ -82,7 +82,7 @@ class TestProductionSetup:
         students = response.json()
         assert len(students) >= 5  # Should have sample students
         
-        print(f"✅ Sample data loaded: {len(students)} students")
+        print(f"Sample data loaded: {len(students)} students")
 
 class TestPerformanceOptimization:
     """Test performance optimization features"""
@@ -109,8 +109,8 @@ class TestPerformanceOptimization:
         cache_hit_rate = metrics.get_cache_hit_rate()
         assert 0.0 <= cache_hit_rate <= 1.0
         
-        print(f"✅ Cache working: {metrics.cache_hits} hits, {metrics.cache_misses} misses")
-        print(f"✅ Cache hit rate: {cache_hit_rate:.1%}")
+        print(f"Cache working: {metrics.cache_hits} hits, {metrics.cache_misses} misses")
+        print(f"Cache hit rate: {cache_hit_rate:.1%}")
     
     def test_batch_processing(self):
         """Test batch grade processing"""
@@ -139,7 +139,7 @@ class TestPerformanceOptimization:
         assert "queued for processing" in data["message"]
         assert data["batch_size"] == len(batch_grades)
         
-        print(f"✅ Batch processing: {len(batch_grades)} grades queued")
+        print(f"Batch processing: {len(batch_grades)} grades queued")
     
     def test_database_query_optimization(self):
         """Test optimized database queries"""
@@ -157,7 +157,7 @@ class TestPerformanceOptimization:
         final_queries = metrics.db_query_count
         assert final_queries > initial_queries
         
-        print(f"✅ Database queries tracked: {final_queries - initial_queries} new queries")
+        print(f"Database queries tracked: {final_queries - initial_queries} new queries")
 
 class TestMonitoringDashboard:
     """Test monitoring dashboard and metrics"""
@@ -176,7 +176,7 @@ class TestMonitoringDashboard:
         assert "Cache Hit Rate" in html_content
         assert "Memory Usage" in html_content
         
-        print("✅ Monitoring dashboard accessible and contains metrics")
+        print("Monitoring dashboard accessible and contains metrics")
     
     def test_metrics_endpoint(self):
         """Test metrics JSON endpoint"""
@@ -200,7 +200,7 @@ class TestMonitoringDashboard:
         assert "hit_rate" in cache
         assert "size" in cache
         
-        print("✅ Metrics endpoint provides comprehensive data")
+        print("Metrics endpoint provides comprehensive data")
     
     def test_response_time_tracking(self):
         """Test response time is tracked in headers"""
@@ -213,7 +213,7 @@ class TestMonitoringDashboard:
         response_time = response.headers["X-Response-Time"]
         assert "ms" in response_time
         
-        print(f"✅ Response time tracked: {response_time}")
+        print(f"Response time tracked: {response_time}")
 
 class TestAlertSystem:
     """Test alert system functionality"""
@@ -238,9 +238,9 @@ class TestAlertSystem:
             with open("alert.log", "r") as f:
                 content = f.read()
                 assert "High memory usage" in content
-            print("✅ Alert system working: High memory alert logged")
+            print("Alert system working: High memory alert logged")
         else:
-            print("ℹ️ No alerts triggered (system within thresholds)")
+            print("INFO: No alerts triggered (system within thresholds)")
     
     def test_cache_hit_rate_alert(self):
         """Test cache hit rate alert"""
@@ -259,9 +259,9 @@ class TestAlertSystem:
             with open("alert.log", "r") as f:
                 content = f.read()
                 if "Low cache hit rate" in content:
-                    print("✅ Cache hit rate alert working")
+                    print("Cache hit rate alert working")
                 else:
-                    print("ℹ️ Cache alert not triggered")
+                    print("INFO: Cache alert not triggered")
         
         # Reset metrics
         metrics.cache_hits = 0
@@ -302,7 +302,7 @@ class TestCostTracking:
         assert api_cost >= 0
         assert total_cost == db_cost + api_cost
         
-        print(f"✅ Cost tracking: DB=${db_cost:.6f}, API=${api_cost:.6f}, Total=${total_cost:.6f}")
+        print(f"Cost tracking: DB=${db_cost:.6f}, API=${api_cost:.6f}, Total=${total_cost:.6f}")
     
     def test_hourly_cost_summary(self):
         """Test hourly cost summary generation"""
@@ -332,7 +332,7 @@ class TestCostTracking:
             assert "environment" in row
             assert "total_cost" in row
         
-        print("✅ Hourly cost summary generated and saved to CSV")
+        print("Hourly cost summary generated and saved to CSV")
 
 class TestStudentGradeAPI:
     """Test core student and grade functionality"""
@@ -370,7 +370,7 @@ class TestStudentGradeAPI:
         
         # Verify caching worked
         assert metrics.cache_hits >= 1
-        print(f"✅ Student caching: {metrics.cache_hits} hits, {metrics.cache_misses} misses")
+        print(f"Student caching: {metrics.cache_hits} hits, {metrics.cache_misses} misses")
     
     def test_add_grade(self):
         """Test adding individual grade"""
@@ -400,7 +400,7 @@ class TestStudentGradeAPI:
         assert "total_grades" in analytics
         assert "subjects" in analytics
         
-        print(f"✅ Analytics: {analytics['total_grades']} grades, avg: {analytics['average_score']}")
+        print(f"Analytics: {analytics['total_grades']} grades, avg: {analytics['average_score']}")
     
     def test_class_analytics(self):
         """Test class-wide analytics"""
@@ -413,7 +413,7 @@ class TestStudentGradeAPI:
         assert "average_score" in analytics
         assert "subjects" in analytics
         
-        print(f"✅ Class analytics: {analytics['total_grades']} total grades")
+        print(f"Class analytics: {analytics['total_grades']} total grades")
 
 class TestSystemHealth:
     """Test system health and monitoring"""
@@ -431,7 +431,7 @@ class TestSystemHealth:
         assert "memory_usage_mb" in health
         assert "cache_size" in health
         
-        print(f"✅ Health check: {health['status']} - Memory: {health['memory_usage_mb']}MB")
+        print(f"Health check: {health['status']} - Memory: {health['memory_usage_mb']}MB")
     
     def test_root_endpoint_info(self):
         """Test root endpoint provides system information"""
@@ -451,7 +451,7 @@ class TestSystemHealth:
         assert any("Cache" in feature for feature in features)
         assert any("Monitoring" in feature for feature in features)
         
-        print(f"✅ System info: {len(features)} features listed")
+        print(f"System info: {len(features)} features listed")
 
 class TestPerformanceMetrics:
     """Test performance monitoring and metrics"""
@@ -471,7 +471,7 @@ class TestPerformanceMetrics:
         # Verify response time is recorded in metrics
         assert len(metrics.response_times) > 0
         
-        print(f"✅ Response time tracked: {response_time}")
+        print(f"Response time tracked: {response_time}")
     
     def test_metrics_collection(self):
         """Test that metrics are properly collected"""
@@ -488,7 +488,7 @@ class TestPerformanceMetrics:
         assert metrics.request_count > initial_requests
         assert metrics.db_query_count > initial_queries
         
-        print(f"✅ Metrics collection: {metrics.request_count} requests, {metrics.db_query_count} queries")
+        print(f"Metrics collection: {metrics.request_count} requests, {metrics.db_query_count} queries")
     
     def test_memory_monitoring(self):
         """Test memory usage monitoring"""
@@ -501,7 +501,7 @@ class TestPerformanceMetrics:
         assert isinstance(memory_usage, (int, float))
         assert memory_usage > 0
         
-        print(f"✅ Memory monitoring: {memory_usage}MB")
+        print(f"Memory monitoring: {memory_usage}MB")
 
 class TestCachePerformance:
     """Test cache performance and optimization"""
@@ -517,7 +517,7 @@ class TestCachePerformance:
         # Cache should not exceed capacity
         assert student_cache.size() <= CACHE_SIZE
         
-        print(f"✅ Cache capacity managed: {student_cache.size()}/{CACHE_SIZE}")
+        print(f"Cache capacity managed: {student_cache.size()}/{CACHE_SIZE}")
     
     def test_cache_invalidation(self):
         """Test cache invalidation on data updates"""
@@ -540,7 +540,7 @@ class TestCachePerformance:
         response2 = client.get(f"/analytics/student/{test_student['student_id']}")
         assert response2.status_code == 200
         
-        print("✅ Cache invalidation working on data updates")
+        print("Cache invalidation working on data updates")
 
 class TestErrorHandling:
     """Test error handling and edge cases"""
@@ -580,7 +580,7 @@ class TestErrorHandling:
 # Simple test runner
 def run_all_tests():
     """Run all tests and show results"""
-    print("🎓 Student Grade Analytics API - Unit Tests")
+    print("Student Grade Analytics API - Unit Tests")
     print("=" * 60)
     
     test_classes = [
@@ -600,7 +600,7 @@ def run_all_tests():
     
     for test_class in test_classes:
         class_name = test_class.__class__.__name__
-        print(f"\n📋 {class_name}:")
+        print(f"\n{class_name}:")
         
         # Get all test methods
         test_methods = [method for method in dir(test_class) if method.startswith('test_')]
@@ -611,33 +611,33 @@ def run_all_tests():
                 method = getattr(test_class, method_name)
                 method()
                 passed_tests += 1
-                print(f"   ✅ {method_name}")
+                print(f"   PASS: {method_name}")
             except Exception as e:
-                print(f"   ❌ {method_name}: {e}")
+                print(f"   FAIL: {method_name}: {e}")
     
     print("\n" + "=" * 60)
-    print(f"📊 Test Results: {passed_tests}/{total_tests} passed")
+    print(f"Test Results: {passed_tests}/{total_tests} passed")
     
     if passed_tests == total_tests:
-        print("🎉 All tests passed!")
+        print("All tests passed!")
     else:
-        print(f"⚠️ {total_tests - passed_tests} tests failed")
+        print(f"WARNING: {total_tests - passed_tests} tests failed")
     
-    print("\n🔧 Production Features Tested:")
-    print("✅ Environment configuration")
-    print("✅ LRU cache performance")
-    print("✅ Database optimization")
-    print("✅ Monitoring dashboard")
-    print("✅ Alert system")
-    print("✅ Cost tracking")
-    print("✅ Performance metrics")
-    print("✅ Error handling")
+    print("\nProduction Features Tested:")
+    print("- Environment configuration")
+    print("- LRU cache performance")
+    print("- Database optimization")
+    print("- Monitoring dashboard")
+    print("- Alert system")
+    print("- Cost tracking")
+    print("- Performance metrics")
+    print("- Error handling")
 
 if __name__ == "__main__":
     # You can run this file directly or use pytest
     run_all_tests()
     
     print("\n" + "=" * 60)
-    print("🔄 You can also run with pytest:")
+    print("You can also run with pytest:")
     print("pytest unit_test.py -v")
     print("=" * 60)

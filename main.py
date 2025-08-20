@@ -143,7 +143,8 @@ class Student(BaseModel):
     email: str
     grade_level: int
     
-    @validator('grade_level')
+    @field_validator('grade_level')
+    @classmethod
     def validate_grade_level(cls, v):
         if v < 1 or v > 12:
             raise ValueError('Grade level must be between 1 and 12')
@@ -156,9 +157,10 @@ class Grade(BaseModel):
     max_score: float = 100.0
     date_recorded: Optional[datetime] = None
     
-    @validator('score')
-    def validate_score(cls, v, values):
-        max_score = values.get('max_score', 100.0)
+    @field_validator('score')
+    @classmethod
+    def validate_score(cls, v, info):
+        max_score = info.data.get('max_score', 100.0) if info.data else 100.0
         if v < 0 or v > max_score:
             raise ValueError(f'Score must be between 0 and {max_score}')
         return v

@@ -55,7 +55,6 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     # Startup
     init_database()
-    cleanup_old_audit_logs()
     logger.info("Student Grade Analytics API started")
     yield
     # Shutdown

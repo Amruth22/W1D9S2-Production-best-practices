@@ -6,7 +6,7 @@ Demonstrates production setup, performance optimization, monitoring, and cost tr
 from fastapi import FastAPI, HTTPException, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse
 from contextlib import asynccontextmanager
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, EmailStr, field_validator
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
 import sqlite3

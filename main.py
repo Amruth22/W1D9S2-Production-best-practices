@@ -354,11 +354,7 @@ async def monitoring_middleware(request: Request, call_next):
 
 # API Endpoints
 
-@app.on_event("startup")
-async def startup_event():
-    """Initialize system on startup"""
-    init_database()
-    logger.info(f"Student Grade Analytics API started in {ENVIRONMENT} mode")
+# Startup logic moved to lifespan context manager above
 
 @app.get("/")
 async def root():

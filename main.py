@@ -5,6 +5,7 @@ Demonstrates production setup, performance optimization, monitoring, and cost tr
 
 from fastapi import FastAPI, HTTPException, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse
+from contextlib import asynccontextmanager
 from pydantic import BaseModel, validator
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
@@ -50,11 +51,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    init_database()
+    cleanup_old_audit_logs()
+    logger.info("Student Grade Analytics API started")
+    yield
+    # Shutdown
+    logger.info("Student Grade Analytics API shutting down")
+
 app = FastAPI(
     title="Student Grade Analytics API",
     description="Production-ready grade analytics with monitoring, caching, and cost tracking",
     version="1.0.0",
-    debug=DEBUG
+    debug=DEBUG,
+    lifespan=lifespan
 )
 
 # Global metrics and monitoring

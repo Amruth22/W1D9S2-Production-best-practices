@@ -853,7 +853,7 @@ if __name__ == "__main__":
         uvicorn.run(
             "main:app",  # Import string for reload
             host="0.0.0.0", 
-            port=8000,  # Use standard port 8000
+            port=8080,  # Use standard port 8000
             reload=True,
             log_level="debug"
         )
@@ -862,6 +862,6 @@ if __name__ == "__main__":
         uvicorn.run(
             app, 
             host="0.0.0.0", 
-            port=8000,
+            port=8080,
             log_level="info"
         )

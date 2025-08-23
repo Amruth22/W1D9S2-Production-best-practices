@@ -848,4 +848,20 @@ async def health_check():
     }
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080, reload=DEBUG)
+    if DEBUG:
+        # Development mode with reload
+        uvicorn.run(
+            "main:app",  # Import string for reload
+            host="0.0.0.0", 
+            port=8000,  # Use standard port 8000
+            reload=True,
+            log_level="debug"
+        )
+    else:
+        # Production mode without reload
+        uvicorn.run(
+            app, 
+            host="0.0.0.0", 
+            port=8000,
+            log_level="info"
+        )

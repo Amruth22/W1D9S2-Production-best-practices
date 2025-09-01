@@ -77,6 +77,21 @@ Visit: http://localhost:8000/dashboard
 python unit_test.py
 ```
 
+### 6. Run Comprehensive Tests (w1d4s2-style-tests branch)
+```bash
+# Switch to testing branch
+git checkout w1d4s2-style-tests
+
+# Quick component validation (~5-8 seconds)
+python run_tests.py quick
+
+# Full component testing (~10-15 seconds)
+python run_tests.py full
+
+# Live API tests with auto server management
+python run_tests.py auto
+```
+
 ## 📊 API Endpoints
 
 ### **Students**
